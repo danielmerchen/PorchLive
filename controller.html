@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.5.2.js"></script>
+
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <style type="text/css">
+    
+  </style>
+
+  <title> by dmerchen</title>
+
+<script type='text/javascript'>//<![CDATA[
+
+var videoPlayerWindow;
+
+function openSecondaryWindow() {
+    return videoPlayerWindow = window.open('player.html', 'secondary', 'width=480,height=270');
+}
+
+function flash() {
+    $('body').css('background-color', 'red').animate({
+        'background-color': '#fff'
+    });
+}
+
+$(function() {
+
+    if (!openSecondaryWindow()) $(document.body).prepend('<a href="#">Popup blocked.  Click here to open the secondary window.</a>').click(function() {
+        openSecondaryWindow();
+        return false;
+    });
+
+    $('#inc').click(function() {
+        if (videoPlayerWindow) videoPlayerWindow.increment();
+        else alert('The secondary window is not open.');
+        return false;
+    });
+
+    //Add Play button
+    $('#play').click(function() {
+        if (videoPlayerWindow) videoPlayerWindow.video.play();
+        else alert('The secondary window is not open.');
+        return false;
+    });
+
+    //Add Play button
+    $('#pause').click(function() {
+        if (videoPlayerWindow) videoPlayerWindow.video.pause();
+        else alert('The secondary window is not open.');
+        return false;
+    });
+
+    $('#fullscreen').click(function() {
+        if (videoPlayerWindow) videoPlayerWindow.video.webkitRequestFullScreen();
+        else alert('The secondary window is not open.');
+        return false;
+    });
+});
+//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+	<p><a id="inc" href="#">Increment counter in secondary window</a></p>
+	<p><a id="play" href="#">Video Play</a></p>
+	<p><a id="pause" href="#">Video Pause</a></p>
+	<p><a id="fullscreen" href="#">Request Fullscreen</a></p>
+
+
+<div id="PlaybackControl" style="display: block;">
+    <h4> Playback Control </h4>
+      <button type="button" class="btn btn-sm btn-info" onclick="videoPlayerWindow.video.play()">play</button>
+      <button type="button" class="btn btn-sm btn-info" onclick="videoPlayerWindow.video.pause()">pause</button>
+      <button type="button" class="btn btn-sm btn-info" onclick="videoPlayerWindow.video.currentTime+=10">currentTime+=10</button>
+      <button type="button" class="btn btn-sm btn-info" onclick="videoPlayerWindow.video.currentTime-=10">currentTime-=10</button>
+      <button type="button" class="btn btn-sm btn-info" onclick="videoPlayerWindow.video.currentTime=$('#seek_pos').val()">seek to </button>
+       <input type="text" id="seek_pos" size="8" onkeydown="if(window.event.keyCode=='13'){$('#video')[0].currentTime=$('#seek_pos').val();}"><br><br>
+      <button type="button" class="btn btn-xs btn-warning" onclick="hls.attachMedia($('#video')[0])">attach Video</button>
+      <button type="button" class="btn btn-xs btn-warning" onclick="videoPlayerWindow.Hls.detachMedia()">detach Video</button><br>
+      <button type="button" class="btn btn-xs btn-warning" onclick="videoPlayerWindow.Hls.startLoad()">start Load</button>
+      <button type="button" class="btn btn-xs btn-warning" onclick="videoPlayerWindow.Hls.stopLoad()">stop Load</button>
+      <button type="button" class="btn btn-xs btn-warning" onclick="videoPlayerWindow.hls.recoverMediaError()">recover Media Error</button><br>
+      <!--
+      <button type="button" class="btn btn-xs btn-warning" onclick="createfMP4('audio');">create audio fmp4</button>
+      <button type="button" class="btn btn-xs btn-warning" onclick="createfMP4('video')">create video fmp4</button><br>
+      -->
+    </div>
+
+<script>
+ 
+  // tell the embed parent frame the height of the content
+ 
+ /* if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "awtk3gw6"
+    }], "*")
+  }
+  */
+</script>
+
+
+
+</body>
+
+</html>

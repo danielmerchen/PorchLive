@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">  
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.5.2.js"></script>  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.6.0/hls.min.js"></script>
+
+  <style type="text/css">
+    body {margin:0; padding:0;}
+  </style>
+
+  <title>JS Receiver / Child</title>
+    
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+  if(Hls.isSupported()) {
+
+ var video = document.getElementById('video');
+        var hls_url = "https://aaIaXqP-lh.akamaihd.net/i/porch_dvr_1@59241/master.m3u8";
+        var config = {
+            autoStartLoad: true,
+            startPosition: -1,
+            capLevelToPlayerSize: false,
+            debug: true, // # debug: false
+            //defaultAudioCodec: undefined,
+            //maxBufferLength: 30,
+            //maxMaxBufferLength: 600,
+            //maxBufferSize: 60*1000*1000,
+            //maxBufferHole: 0.5,
+            //maxSeekHole: 2,
+            //seekHoleNudgeDuration: 0.01,
+            //maxFragLookUpTolerance: 0.2,
+            //liveSyncDurationCount: 12, // Interger in segments. Force the player to stay 10 segments off of live. 10s segments * 12 = 120s delay from Live.
+            //liveMaxLatencyDurationCount: Infinity, //Allow the client to be indefinately delayed from live encoding.
+            liveSyncDuration: 120, // Interger in seconds. Force player to allow 120 seconds for the sync operations to complete.
+            enableWorker: true, // This is intergral to playback performance, allow threading the demux/mux operations in a seperate thread.
+            //enableSoftwareAES: true,
+            //manifestLoadingTimeOut: 10000,
+            //manifestLoadingMaxRetry: 6,
+            //manifestLoadingRetryDelay: 500,
+            //manifestLoadingMaxRetryTimeout : 64000,
+            startLevel: undefined,
+            //levelLoadingTimeOut: 10000,
+            levelLoadingMaxRetry: 6,
+            levelLoadingRetryDelay: 500,
+            levelLoadingMaxRetryTimeout: 64000,
+            fragLoadingTimeOut: 20000,
+            fragLoadingMaxRetry: 6,
+            fragLoadingRetryDelay: 500,
+            fragLoadingMaxRetryTimeout: 64000,
+            startFragPrefech: false,
+            appendErrorMaxRetry: 3,
+            /*loader: customLoader,
+            fLoader: customFragmentLoader,
+            pLoader: customPlaylistLoader,
+            xhrSetup: XMLHttpRequestSetupCallback,
+            fetchSetup: FetchSetupCallback,
+            abrController: customAbrController,
+            timelineController: TimelineController,
+            enableCEA708Captions: true,
+            stretchShortVideoTrack: false, */
+            forceKeyFrameOnDiscontinuity: true,
+            abrEwmaFastLive: 5.0,
+            abrEwmaSlowLive: 9.0,
+            abrEwmaFastVoD: 4.0,
+            abrEwmaSlowVoD: 15.0,
+            abrEwmaDefaultEstimate: 500000,
+            abrBandWidthFactor: 0.8,
+            abrBandWidthUpFactor: 0.7,
+            minAutoBitrate: 0
+        };
+
+        var hls = new Hls(config); // bind them together
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+            console.log("video and hls.js are now bound together !");
+            hls.loadSource(hls_url);
+            hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+                console.log("manifest loaded, found " + data.levels.length + " quality level");
+            });
+        });
+    }
+}//]]> 
+
+</script>
+
+
+
+<script type='text/javascript'>//<![CDATA[
+
+var i = 0;
+
+function increment() {
+    $('span').text(++i + ' time' + (i == 1 ? '' : 's'));
+}
+
+$(function() {
+    $('a').click(function() {
+       if (opener) opener.flash();
+        else alert('Main window is closed.');
+        return false;
+    }); 
+});
+//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+ <video width="480px" id="video"></video>
+  <p>This is the secondary window. You've clicked the link in the first window <span>0 times</span>.</p>
+  <p><a href="#">Call back to main window.</a>
+
+<div id="video-container">
+
+  <!-- Video Controls -->
+  <div id="video-controls">
+    <button type="button" id="play-pause">Play</button>
+    <input type="range" id="seek-bar" value="0">
+    <button type="button" id="mute">Mute</button>
+    <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1">
+    <button type="button" id="full-screen">Full-Screen</button>
+  </div>
+</div>
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  /*
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "None"
+    }], "*")
+  }
+  */
+</script>
+
+</body>
+
+</html>
+
